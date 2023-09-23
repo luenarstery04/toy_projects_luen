@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 지수 계산기</title>
+    <script src=""></script>
+</head>
+<body>
+    <h1>BMI 지수 계산기</h1>
+    <hr>
+    <label for="height">키(cm) : </label>
+    <input type="number" id="insert_height" placeholder="키를 입력해주세요">
+
+    <label for="weight">몸무게(kg) : </label>
+    <input type="number" id="insert_weigth" placeholder="몸무게를 입력해주세요">
+    <br>
+    <button onclick="BMI_Cal()">BMI 계산하기</button>
+
+    <h2>결과</h2>
+    <p id="result_string"></p>
+    <label><a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=bmi+%EA%B3%84%EC%82%B0%EA%B8%B0">네이버 BMI지수 계산기 바로가기</a></label>
+
+    <script>
+        function BMI_Cal() {
+            const height = parseFloat(document.getElementById("insert_height").value) / 100;
+            const weight = parseFloat(document.getElementById("insert_weigth").value);
+
+            if (isNaN(height) || isNaN(weight)) {
+                alert("유효한 값을 입력해주세요");
+                return
+            };
+
+            const bmi = weight / (height * height);
+            let category = "";
+
+            if (bmi < 18.5) {
+                category = "저체중";
+            } else if (bmi < 24.9) {
+                category = "정상체중";
+            } else if (bmi < 25.9) {
+                category = "과체중";
+            } else if (bmi < 29.9) {
+                category = "경도비만";
+            } else if (bmi < 34.9) {
+                category = "중증도비만";
+            } else {
+                category = "고도비만";
+            }
+
+        };
+    </script>
+</body>
+</html>
