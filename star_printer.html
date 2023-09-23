@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>별 출력기</title>
+</head>
+<body>
+    <h1>별을 피라미드 모양으로 쌓아줍니다</h1>
+    <hr>
+    <div id="pyramid">
+        <button onclick="star_print()">별 쌓기</button>
+        <script>
+            function star_print() {
+                let inputNum = parseInt(prompt("몇 층으로 쌓을까요?"));
+                if (!isNaN(inputNum)) {
+                    let div = document.getElementById("pyramid");
+                    div.innerHTML = "";
+
+                    for(let i = 0; i < inputNum; i++) {
+                        let star = '';
+                        for (let j = 0; j < (i + 1); j++) {
+                            star += "★";
+                        };
+                        div.innerHTML += star + "<br>";
+                    };
+                    div.innerHTML += '<h3>짜잔!</h3>';
+                    div.innerHTML += '<button onclick="star_print()">다시 쌓기</button>';
+                } else {
+                    alert("유효한 숫자가 아닙니다.");
+                };
+            };
+        </script>
+    </div>
+</body>
+</html>
