@@ -89,3 +89,48 @@ def factorial(n):
 
 print(factorial(20))
 
+# 1.15 100과 200 두 값이 있을 경우 이 값들의 평균값을 출력하는 프로그램 작성
+def num_avg(n1, n2):
+    return (n1 + n2) / 2
+
+print(num_avg(100, 200))
+
+# 1.16 50과 30 두 값이 있을 경우 사칙연산을 수행하는 프로그램을 작성하시오
+
+class MathCalculator:
+    def __init__(self):
+        self.n1 = int(input("첫 번째 수 입력 : "))
+        self.n2 = int(input("두 번째 수 입력 : "))
+
+        self.math_calculator()
+
+    def math_calculator(self):
+
+        while True:
+            cal = input("계산자 선택 (+ - * /) 종료는 e : ")
+
+            if cal == '+':
+                print(self.add())
+            elif cal == '-':
+                print(self.minus())
+            elif cal == '*':
+                print(self.multiply())
+            elif cal == '/':
+                print(self.divide())
+            elif cal == 'e':
+                break
+            else:
+                print("올바른 계산자를 선택해주십시오")
+                print()
+
+    def add(self):
+        return self.n1 + self.n2
+    
+    def minus(self):
+        return self.n1 - self.n2
+    
+    def multiply(self):
+        return self.n1 * self.n2
+    
+    def divide(self):
+        return self.n1 / self.n2
