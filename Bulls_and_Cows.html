@@ -9,6 +9,11 @@
             text-align: center;
             margin: 0 auto;
         }
+        ol {
+            margin: 0 auto;
+            width: 500px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -16,84 +21,93 @@
     <div>
         <h1>숫자 야구 게임</h1>
         <p>게임 규칙</p>
+        <ol>
+            <li>이 게임은 랜덤하게 생성된 4개의 숫자 배열을 맞추는 게임입니다.</li>
+            <li>X는 아웃, B는 볼, S는 스트라이크라는 의미입니다.</li>
+            <li>X : 일치하는 숫자가 없음.<br>B : 배열에 포함되나 위치가 다름.<br>S : 올바른 위치</li>
+        </ol>
     </div>
     <div>
         <h3>결과 박스</h3>
-        <input type="text" id="insert_num" placeholder="4자리 랜덤 숫자" onkeyup="playerNums()"/>
+        <input type="text" id="insert_num" placeholder="임의의 4자리 숫자"
+         onkeyup="if(window.event.keyCode==13){playerNums(this.value)}">
         <p id="result_string"></p>
+        <button id="regen">숫자 재생성하기</button>
     </div>
 </body>
 <script>
-    window.onload = function() {
-        // 랜덤한 숫자 생성
-        function randNumsGen() {
-            const right_nums = [];
+    // 랜덤한 숫자 생성
+    function randNumsGen() {
+        const right_nums = [];
 
-            for(let i =0; i < 4; i++){
-                let new_num;
+        for(let i =0; i < 4; i++){
+            let new_num;
 
-                do {
-                    new_num = Math.floor(Math.random() * 10);
-                } while (right_nums.includes(new_num));
+            do {
+                new_num = Math.floor(Math.random() * 10);
+            } while (right_nums.includes(new_num));
 
-                right_nums.push(new_num);
-            };
-
-            return right_nums;
+            right_nums.push(new_num);
         };
-
-        // 플레이어에게 숫자 입력 받기
-        function playerNums() {
-            while (true) {
-                const inputString = document.getElementById('insert_num').value;
-
-                if (inputString.length !== 4 || new Set(inputString).size !== 4) {
-                    alert("4자리의 중복되지 않은 숫자를 입력해주세요.");
-                    return;
-                }
-
-                const playerNums = Array.from(inputString, (digit) => parseInt(digit, 10));
-
-                if (playerNums.some(isNaN)) {
-                    alert("입력 받은 수는 정수가 아닙니다.");
-                    return;
-                }
-
-                return playerNums;
-            };
-        };
-
-        // 검증용 함수
-        function validate(right_nums, playerNums){
-            const result = Array(4).fill('X');
-
-            for(let i = 0; i < 4; i++){
-                if (playerNums[i] === right_nums[i]){
-                    result[i] = 'S';
-                } else if (right_nums.includes(playerNums[i])) {
-                    result[i] = 'B';
-                };
-            };
-
-            return result;
-        };
-
-        // 실행
-        const com = randNumsGen()
-        let tries = 0;
-
-        while (true) {
-            const userNums = playerNums();
-            const results = validate(com, userNums);
-            const resultString = results.join(' ');
-            document.getElementById("result_string").textContent += resultString;
-
-            if (results.every(result => result === 'S')){
-                break;
-            } else {
-                tries += 1;
-            };
-        };
+        console.log(right_nums)
+        return right_nums;
     };
+
+    // 플레이어에게 숫자 입력 받기
+    function playerNums(nums) {
+        while (true) {
+            console.log(nums)
+            const inputString = nums;
+
+            if (inputString.length !== 4 || new Set(inputString).size !== 4) {
+                alert("4자리의 중복되지 않은 숫자를 입력해주세요.");
+                return;
+            }
+
+            var playerNum = Array.from(inputString, (digit) => parseInt(digit, 10));
+
+            if (playerNum.some(isNaN)) {
+                alert("입력 받은 수는 정수가 아닙니다.");
+                return;
+            }
+
+            break
+        };
+        validate(com_number, playerNum)
+
+    };
+
+    // 검증용 함수
+    function validate(right_nums, playerNums){
+        const result = Array(4).fill('X');
+
+        for(let i = 0; i < 4; i++){
+            if (playerNums[i] === right_nums[i]){
+                result[i] = 'S';
+            } else if (right_nums.includes(playerNums[i])) {
+                result[i] = 'B';
+            };
+        };
+
+        const resultStrings = document.getElementById("result_string");
+        resultStrings.innerHTML += result.join(' ') + '<br>';
+
+        if (result.every(re => re === 'S')) {
+            resultStrings.innerHTML += `축하합니다! ${tries}번의 시도만에 맞췄습니다.`;
+            tries = 1;
+        } else {
+            tries += 1;
+        }
+    };
+
+    // 실행
+    var com_number = randNumsGen();
+    document.getElementById('regen').addEventListener('click', function () {
+        com_number = randNumsGen();
+        alert("숫자가 재생성되었습니다.")
+        document.getElementById("result_string").innerHTML = "";
+    });
+    var tries = 1;
+
 </script>
 </html>
