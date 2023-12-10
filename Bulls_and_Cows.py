@@ -58,21 +58,20 @@ def validate(right_nums, player_nums):
     return result
 
 com = rand_nums_gen()
-tries = 0
+tries = 1
+print("""======= 숫자 야구 게임 시작 =======
+임의의 4 자리 숫자를 입력해주세요.
+X는 아웃, B는 볼, S는 스트라이크입니다.
+
+X : 해당 숫자가 리스트에 없음
+B : 리스트에 있으나 자리가 맞지 않음
+S : 정확한 자리와 숫자
+""")
 
 while True:
-    print("""======= 숫자 야구 게임 시작 =======
-    임의의 4 자리 숫자를 입력해주세요.
-    X는 아웃, B는 볼, S는 스트라이크입니다.
-
-    X : 해당 숫자가 리스트에 없음
-    B : 리스트에 있으나 자리가 맞지 않음
-    S : 정확한 자리와 숫자
-    """)
-
     user_nums = player_nums()
     results = validate(com, user_nums)
-    print(results)
+    print(results, '\n')
 
     if results == ['S', 'S', 'S', 'S']:
         break
